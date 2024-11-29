@@ -24,6 +24,4 @@ scikit-optimize
 
 joblib
 
-keras
-
 flask
