@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelo de Inferencia</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Inferencia con el Modelo</h1>
+  <form id="predictionForm">
+
+    <input type="file" name="file" accept=".csv"><br><br>
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("predictionForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      const response = await fetch("/predict", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+    });
+  </script>
+</body>
+</html>
