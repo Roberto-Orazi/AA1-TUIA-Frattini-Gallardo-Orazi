@@ -10,6 +10,8 @@ COPY modelo_nn.h5 ./
 COPY preprocess.pkl .
 COPY weatherAUS.csv .
 
+VOLUME ["/app/resultados"]
+
 EXPOSE 5000
 
 CMD ["python", "inferencia.py"]

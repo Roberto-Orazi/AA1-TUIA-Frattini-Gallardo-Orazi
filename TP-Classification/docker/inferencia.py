@@ -14,16 +14,14 @@ X_new = pd.read_csv("weatherAUS.csv")
 
 # Seleccionar 10 datos al azar para la inferencia
 X_new = X_new.sample(n=10, random_state=42)
-
+true_rain_value = X_new["RainTomorrow"]
 X_new = X_new.drop(["Location", "RainTomorrow"], axis=1)
 
 # Convertir Date de una columna que contiene los dias a contener solamente los meses
 X_new["Date"] = pd.to_datetime(X_new["Date"])
 X_new["Date"] = X_new["Date"].dt.month
 
-
 # Codificacion de variables categoricas
-
 cardinal_to_angle = {
     "N": 0,
     "NNE": 22.5,
@@ -68,7 +66,6 @@ X_new = X_new.drop(columns=["WindDir3pm"])
 
 # Convertir las variables RainToday y RainTomorrow en variables de valor 0 para No llovio y 1 para Llovio.
 X_new[["RainToday"]] = X_new[["RainToday"]].replace({"No": 0, "Yes": 1})
-
 print(X_new.columns)
 
 # Aplicar el pipeline al nuevo conjunto de datos
@@ -94,8 +91,9 @@ print(pd.DataFrame(y_pred, columns=["Predicciones"]).head())
 predictions_df = pd.DataFrame(
     {"Predicciones": y_pred.flatten(), "Lluvia": rain_predictions}
 )
-predictions_df.to_csv("predicciones.csv", index=False)
+predictions_df.to_csv("resultados/predicciones.csv", index=False)
 
 # Mostrar los primeros registros para ver el resultado
+print(true_rain_value)
 print(X_new_scaled_df.head())
 print(predictions_df.head())
